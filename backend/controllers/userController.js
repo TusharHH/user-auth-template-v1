@@ -9,6 +9,11 @@ const sendMail = require('../utils/sendMail');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+// Otp templates
+const signupOtpTemplate = require('../templates/signupOtpTemplate.js');
+const loginOtpTemplate = require('../templates/loginOtpTemplate.js');
+const resetPasswordOtpTemplate = require('../templates/resetPasswordOtpTemplate.js');
+
 // api/v1/users/login
 const login = asyncHandler(async (req, res) => {
 
@@ -24,9 +29,6 @@ const login = asyncHandler(async (req, res) => {
         return res.json({ message: 'Invalid email.' });
     };
 
-    console.log(`Stored Hashed Password: ${user.password}`);
-    console.log(`Entered Password: ${password}`);
-
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -41,19 +43,12 @@ const login = asyncHandler(async (req, res) => {
 
     user.token = token;
 
-    const otp = Math.floor(1 + Math.random() * 1000);
-    user.otp = otp;
-
-    await user.save();
-
-    sendMail(email, otp);
-
     res.json({ message: 'Login successful', token });
 
 });
 
 // api/v1/users/signup
-const signup = asyncHandler(async (req, res, next) => {
+const signup = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -71,10 +66,6 @@ const signup = asyncHandler(async (req, res, next) => {
         password
     });
 
-    const otp = Math.floor(1 + Math.random() * 1000);
-    newUser.otp = otp;
-
-    sendMail(email, otp);
     await newUser.save();
 
     res.status(201).json({
@@ -89,7 +80,7 @@ const signup = asyncHandler(async (req, res, next) => {
 // api/v1/users/send-otp
 const send_otp = asyncHandler(async (req, res) => {
 
-    const {email} = req.body;
+    const { email, type } = req.body;
 
     if (!email) {
         return res.status(400).json({ message: 'Please enter your email.' });
@@ -100,15 +91,28 @@ const send_otp = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'User not found.' });
     }
 
-    const otp = Math.floor(1 + Math.random() * 1000);
+    const otp = Math.floor(1000 + Math.random() * 9000);
     userExists.otp = otp;
 
-    sendMail(email, otp);
+    let subject, htmlContent;
+
+    if (type === 'signup') {
+        subject = 'Complete Your Signup - OTP Verification';
+        htmlContent = signupOtpTemplate(otp, userExists.name);
+    } else if (type === 'login') {
+        subject = 'Login Verification OTP';
+        htmlContent = loginOtpTemplate(otp, userExists.name);
+    } else if (type === 'reset-password') {
+        subject = 'Password Reset OTP';
+        htmlContent = resetPasswordOtpTemplate(otp, userExists.name);
+    }
+
     await userExists.save();
+    await sendMail(email, subject, htmlContent);
 
-    res.json({ message: 'OTP sent successfully.' });
-
+    res.json({ message: `OTP sent for ${type}.` });
 });
+
 
 // api/v1/users/verfiy-otp
 const verifyOtp = asyncHandler(async (req, res) => {
@@ -151,7 +155,7 @@ const reset_password = asyncHandler(async (req, res) => {
     if (user.otp !== otp) {
         return res.status(400).json({ message: 'Invalid OTP.' });
     }
-    
+
     user.password = password;
     user.otp = null;
 
