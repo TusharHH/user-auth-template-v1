@@ -1,0 +1,123 @@
+$background-color: #2b6b2f;
+$container-bg-color: #1f2d38;
+$text-color-primary: #80d495;
+$text-color-secondary: #c1c1c1;
+$input-bg-color: #2a3e4d;
+$input-border-color: #5a737e;
+$button-color: #27a167;
+$button-hover-color: #1f8950;
+
+body {
+    font-family: "Arial", sans-serif;
+    background-color: $background-color;
+    height: 100vh;
+}
+
+.otp-container {
+    margin: 10% auto;
+    background-color: $container-bg-color;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+
+    h2 {
+        color: $text-color-primary;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: $text-color-secondary;
+        margin-bottom: 20px;
+    }
+
+    .otp-input {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 20px;
+
+        .otp-field {
+            width: 50px;
+            height: 50px;
+            border: 1px solid $input-border-color;
+            border-radius: 5px;
+            background-color: $input-bg-color;
+            text-align: center;
+            font-size: 1.5em;
+            color: #ffffff;
+        }
+    }
+
+    .verify-btn {
+        background-color: $button-color;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        &:hover {
+            background-color: $button-hover-color;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .otp-container {
+        max-width: 90%;
+        padding: 15px;
+
+        h2 {
+            font-size: 1.2em;
+        }
+
+        p {
+            font-size: 0.9em;
+        }
+
+        .otp-input {
+            gap: 8px;
+
+            .otp-field {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2em;
+            }
+        }
+
+        .verify-btn {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .otp-container {
+        h2 {
+            font-size: 1em;
+        }
+
+        p {
+            font-size: 0.8em;
+        }
+
+        .otp-input {
+            gap: 6px;
+
+            .otp-field {
+                width: 35px;
+                height: 35px;
+                font-size: 1em;
+            }
+        }
+
+        .verify-btn {
+            padding: 6px 12px;
+            font-size: 0.8em;
+        }
+    }
+}

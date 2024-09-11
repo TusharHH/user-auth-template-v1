@@ -1,0 +1,77 @@
+// ResetPassword.scss
+
+.reset-password-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #007b33; // Matches the green background in your screenshot
+}
+
+.reset-password-form {
+    background-color: #1e2a38; // Matches the dark background of the form
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    color: #fff;
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #95a5a6; // Label color same as placeholder
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2c3e50; // Matches input fields' background
+            color: #fff;
+            font-size: 0.9rem;
+
+            &::placeholder {
+                color: #95a5a6; // Placeholder text color
+            }
+        }
+    }
+
+    .reset-password-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #00af66; // Matches the green button color
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #009954;
+        }
+
+        &:disabled {
+            background-color: #a0a0a0;
+            cursor: not-allowed;
+        }
+    }
+
+    .message {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #1abc9c;
+    }
+}

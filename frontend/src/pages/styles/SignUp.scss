@@ -1,0 +1,152 @@
+$primary-color: #2b6b2f;
+$container-bg: #1f2d38;
+$input-bg: #2a3e4d;
+$button-bg: #27a167;
+$button-bg-hover: #1f8950;
+$valid-color: #4caf50;
+$invalid-color: #f44336;
+$text-color-primary: #ffffff;
+$text-color-secondary: #c1c1c1;
+
+body {
+    font-family: "Arial", sans-serif;
+    background-color: $primary-color;
+    height: 100vh;
+}
+
+.signup-container {
+    margin: 5% auto;
+    background-color: $container-bg;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    color: $text-color-primary;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    form {
+        .form-group {
+            margin-bottom: 20px;
+
+            input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid $input-bg;
+                border-radius: 5px;
+                background-color: $input-bg;
+                color: $text-color-primary;
+                font-size: 1em;
+                outline: none;
+
+                &:focus {
+                    border-color: lighten($input-bg, 15%);
+                }
+            }
+        }
+
+        .password-strength {
+            display: flex;
+            justify-content: space-between;
+            color: $text-color-secondary;
+            margin-bottom: 10px;
+
+            .strength-bars {
+                display: flex;
+                gap: 4px;
+
+                div {
+                    width: 40px;
+                    height: 5px;
+                    background-color: $invalid-color;
+
+                    &.filled {
+                        background-color: $valid-color;
+                    }
+                }
+            }
+        }
+
+        .password-criteria {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: $text-color-secondary;
+            font-size: 0.9em;
+
+            li {
+                margin-bottom: 5px;
+
+                &.valid {
+                    color: $valid-color;
+                }
+            }
+        }
+
+        .signup-btn {
+            background-color: $button-bg;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: $button-bg-hover;
+            }
+        }
+    }
+
+    .login-redirect {
+        margin-top: 20px;
+        color: $text-color-secondary;
+
+        a {
+            color: lighten($button-bg, 15%);
+            text-decoration: none;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .signup-container {
+        padding: 15px;
+        max-width: 90%;
+        h2 {
+            font-size: 1.3em;
+        }
+        form {
+            .form-group input {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+            .signup-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .signup-container {
+        padding: 10px;
+        h2 {
+            font-size: 1.1em;
+        }
+        form {
+            .form-group input {
+                padding: 6px;
+                font-size: 0.8em;
+            }
+            .signup-btn {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+    }
+}
